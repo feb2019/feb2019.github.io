@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%; /* full window width */
+                text-align: center;
+            }
+            #wrapper {
+                width: 95%; /* of body width */
+            }
+            img {
+                max-width:420px;
+            }
+            #wrapper>div {
+                display: inline-block;
+                width: 32%; /* of wrapper width */
+                margin: auto;
+                text-align: left;
+            }
+        </style>
+        <script
+        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+        crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <section id='game-header'></section>
+        <section id='game-body'>
+            <div id='question-image'><img id="game_img"/></div>
+            <div id='question-text'></div>
+            <div id='question-answers'>
+                <select></select>
+            </div>
+            <div id='game-navigation'>
+                <button id='back-button'>Previous Question</button>
+                <button id='next-button'>Next Question</button>
+            </div>
+        </section>
+        <section id='game-footer'></section>
+    </body>
+    <script>
+        let currentQuestion = 0;
+        const questions = [
+            {image:'https://drive.google.com/thumbnail?id=1bhXPIx0pTrG3Dx4ZyHM6MZg6vGHYuqo9', question:'Welcome, this is might be a lot of text cause Im trying to explain everything in one go. \n But the idea is there are prompts and you choose a location based on where the prompt happened. \nIts like one of those detective games but also not cause you can definitely tell how low-end this is.'},
+            {image:'https://media.wired.com/photos/5aaabb2c0810d969021d9c63/master/pass/BigBang-184895179-web.jpg', question:'"Hi, Im Anikka"',answer:'2'},
+            {image:'http://wrpf.org.sg/wp-content/uploads/2017/09/handholding-istock-1080x675.jpg', question:'"Thanks for coming to get me"',answer:'12'},
+            {image:'https://media1.tenor.com/images/79b0f5d59a03bdef45adf6a87997adf0/tenor.gif?itemid=5610222', question:'"Heres my piece for today :)."',answer:'3'},
+            {image:'https://st2.depositphotos.com/2134479/7047/v/950/depositphotos_70473351-stock-illustration-vector-coffee-cup-with-coffee.jpg', question:'"Wait, I wanna get cold brew"',answer:'10'},
+            {image:'image-location', question:'"I love You."',answer:'4'},
+            {image:'https://drive.google.com/thumbnail?id=1bhXPIx0pTrG3Dx4ZyHM6MZg6vGHYuqo9', question:'"If youve made it this far, \nyou win the important part of the game. \n Text WON to +1(650)-390-4728". \nYou can hit next to continue \n and see just how many questions I can fit into this',answer:'4'},
+            {image:'https://i2.wp.com/alicesteacup.com/wp-content/uploads/2017/08/alice-tea-cup-9a.jpg?fit=1000%2C668&ssl=1', question:'"Do you like tea? Ill make you some."',answer:'1'},
+            {image:'image-location', question:'"Outside, I like outside better"',answer:'9'}, {image:'image-location', question:'"Outside, I like outside better. again but a different place"',answer:'10'}, {image:'image-location', question:'*Turning poetry to paintings*',answer:'6'}, {image:'image-location', question:'"I didnt say Id lick you but you said i did"',answer:'7'}, {image:'image-location', question:'I stopped writing these cause I didnt want to take all your time, just text me that you want more and Ill add em',answer:'0'},
+        ];
+        const answers = ['Choose One','Oldenborg', 'Lyon Lounge', 'TSL Office', 'Walker', 'The Library', 'Coop Fountain',
+        'Edmunds Ballroom', 'Doms Lounge', 'Frank Dining Hall',
+        'Frary', 'Harvey Mudd', 'That Road between scripps and cmc, its really shitty to board on', 'The Village'
+        ];
+        for(answer in answers){
+                $('select').append("<option value="+ (answer) +">"+ answers[answer] +"</option>");
+            };
+        const refreshGame = function() {
+            $('#question-text').text(questions[currentQuestion].question);
+            $("#game_img").attr("src",questions[currentQuestion].image);
+        }
+        const back = function() {
+            if(currentQuestion != 0){
+                currentQuestion--;
+            }
+                refreshGame();
+        }
+        const next = function() {
+            var selectedAnswer = $('#question-answers select').val();
+            var correctAnswer = questions[currentQuestion].answer;
+            if(selectedAnswer === correctAnswer){
+                currentQuestion++;
+            } else if(currentQuestion === 0 || currentQuestion === 5){
+                currentQuestion++;
+            }
+                refreshGame();
+        }
+        $('#back-button').click(function(){
+            back();
+        });
+        $('#next-button').click(function(){
+            next();
+        });
+        refreshGame();
+    </script>
+</html>
